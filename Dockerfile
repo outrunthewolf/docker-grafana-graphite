@@ -42,14 +42,11 @@ RUN     mkdir /src                                                              
         sed -i -e "s|.replace(/\[^a-zA-Z_\\\\-0-9\\\\.]/g, '');|.replace(/[^a-zA-Z_\\\\-0-9\\\\.\\\\%]/g, '');|" /src/statsd/stats.js
 
 
-# Install & Patch Grafana
+# Install Grafana
 RUN     mkdir /src/grafana                                                                                                              &&\
         git clone https://github.com/grafana/grafana.git /src/grafana                                                                   &&\
         cd /src/grafana                                                                                                                 &&\
         git checkout v1.9.0
-
-ADD     ./grafana/correctly-show-urlencoded-metrics.patch /src/grafana/correctly-show-urlencoded-metrics.patch
-RUN     git apply /src/grafana/correctly-show-urlencoded-metrics.patch --directory=/src/grafana                                         &&\
         cd /src/grafana                                                                                                                 &&\
         npm install                                                                                                                     &&\
         npm install -g grunt-cli                                                                                                        &&\
@@ -84,7 +81,6 @@ RUN     cd /var/lib/graphite/webapp/graphite && python manage.py syncdb --noinpu
 
 # Configure Grafana
 ADD     ./grafana/config.js /src/grafana/dist/config.js
-ADD     ./grafana/default-dashboard.json /src/grafana/dist/app/dashboards/default.json
 
 # Configure nginx and supervisord
 ADD     ./nginx/nginx.conf /etc/nginx/nginx.conf
@@ -113,4 +109,4 @@ EXPOSE  8126
 #   Run!   #
 # -------- #
 
-CMD     ["/usr/bin/supervisord"]
+#CMD     ["/usr/bin/supervisord"]
