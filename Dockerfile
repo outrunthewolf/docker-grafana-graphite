@@ -88,6 +88,7 @@ ADD     ./grafana/default-dashboard.json /src/grafana/dist/app/dashboards/defaul
 
 # Configure nginx and supervisord
 ADD     ./nginx/nginx.conf /etc/nginx/nginx.conf
+ADD     ./nginx/.htpasswd /etc/nginx/.htpasswd
 ADD     ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 
