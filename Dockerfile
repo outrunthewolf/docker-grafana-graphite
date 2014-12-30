@@ -109,4 +109,4 @@ EXPOSE  8126
 #   Run!   #
 # -------- #
 
-#CMD     ["/usr/bin/supervisord"]
+CMD     ["/usr/bin/supervisord"]
