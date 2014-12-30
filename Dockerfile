@@ -83,8 +83,6 @@ RUN     cd /var/lib/graphite/webapp/graphite && python manage.py syncdb --noinpu
 ADD     ./grafana/config.js /src/grafana/dist/config.js
 
 # Configure nginx and supervisord
-ADD     ./nginx/nginx.conf /etc/nginx/nginx.conf
-ADD     ./nginx/.htpasswd /etc/nginx/.htpasswd
 ADD     ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 
@@ -103,10 +101,3 @@ EXPOSE  8125/udp
 EXPOSE  8126
 
 
-
-
-# -------- #
-#   Run!   #
-# -------- #
-
-CMD     ["/usr/bin/supervisord"]
