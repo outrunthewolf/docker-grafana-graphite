@@ -35,21 +35,21 @@ RUN     pip install --install-option="--prefix=/var/lib/graphite" --install-opti
 #  metrics names for actors, http traces and dispatchers.
 
 # Install & Patch StatsD
-RUN     mkdir /src                                                                                                                      &&\
-        git clone https://github.com/etsy/statsd.git /src/statsd                                                                        &&\
-        cd /src/statsd                                                                                                                  &&\ 
-        git checkout v0.7.2                                                                                                             &&\
+RUN     mkdir /src && \                                                                                                               
+        git clone https://github.com/etsy/statsd.git /src/statsd && \                                                                      
+        cd /src/statsd && \                                                                                                             
+        git checkout v0.7.2 && \                                                                                               
         sed -i -e "s|.replace(/\[^a-zA-Z_\\\\-0-9\\\\.]/g, '');|.replace(/[^a-zA-Z_\\\\-0-9\\\\.\\\\%]/g, '');|" /src/statsd/stats.js
 
 
 # Install Grafana
-RUN     mkdir /src/grafana                                                                                                              &&\
-        git clone https://github.com/grafana/grafana.git /src/grafana                                                                   &&\
-        cd /src/grafana                                                                                                                 &&\
-        git checkout v1.9.0
-        cd /src/grafana                                                                                                                 &&\
-        npm install                                                                                                                     &&\
-        npm install -g grunt-cli                                                                                                        &&\
+RUN     mkdir /src/grafana && \                                                                                                             
+        git clone https://github.com/grafana/grafana.git /src/grafana && \                                                                   
+        cd /src/grafana && \                                                                 
+        git checkout v1.9.0 && \
+        cd /src/grafana && \                                                                                                                
+        npm install && \                                                                                                                    
+        npm install -g grunt-cli && \                                                                                                       
         grunt build 
 
 
@@ -99,5 +99,6 @@ EXPOSE  8125/udp
 
 # StatsD Management port
 EXPOSE  8126
+
 
 
